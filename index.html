@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chessboard</title>
+    <style>
+        :root {
+            --light-color: #eeeed2;
+            --dark-color: #769656;
+            --square-size: 80px;
+            --piece-size: 80px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 750px;
+        }
+
+        .chessboard {
+            display: grid;
+            grid-template-columns: repeat(8, var(--square-size));
+            grid-template-rows: repeat(8, var(--square-size));
+            border: 3px solid black;
+            position: relative;
+            width: fit-content;
+        }
+
+        .square {
+            width: var(--square-size);
+            height: var(--square-size);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .piece {
+            width: var(--square-size);
+            height: var(--square-size);
+            position: absolute;
+            cursor: pointer;
+            font-size: var(--piece-size);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+
+        .thumb {
+            position: absolute;
+            opacity: 35%;
+        }
+
+        #pawn-1 {
+            top: calc(var(--piece-size) * 6);
+            left: calc(var(--piece-size) * 0);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="chessboard" id="chessboard">
+            <div class="piece pawn" id="pawn-1">♟︎</div>
+            <div class="piece pawn" id="pawn-2">♟︎</div>
+            <div class="piece pawn" id="pawn-3">♟︎</div>
+            <div class="piece pawn" id="pawn-4">♟︎</div>
+            <div class="piece pawn" id="pawn-5">♟︎</div>
+            <div class="piece pawn" id="pawn-6">♟︎</div>
+            <div class="piece pawn" id="pawn-7">♟︎</div>
+            <div class="piece pawn" id="pawn-8">♟︎</div>
+            <div class="piece special" id="rook-1">♜</div>
+            <div class="piece special" id="knight-1">♞</div>
+            <div class="piece special" id="bishop-1">♝</div>
+            <div class="piece special" id="queen">♛</div>
+            <div class="piece special" id="king">♚</div>
+            <div class="piece special" id="bishop-2">♝</div>
+            <div class="piece special" id="knight-2">♞</div>
+            <div class="piece special" id="rook-2">♜</div>
+        </div>
+    </div>
+
+
+    <script src="main.js"></script>
+</body>
+
+</html>
