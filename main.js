@@ -63,23 +63,13 @@ function dragstartHandler(e) {
 }
 
 
-// 2nd try
 function dropHandler(e) {
     e.preventDefault();
     let pieceSymbol = e.dataTransfer.getData("text/plain");
     let pieceId = e.dataTransfer.getData("text/id");
 
-    // console.log("Text: " + pieceSymbol);
-    // console.log("ID: " + pieceId);
-
-    // console.log("Left value before: ", document.getElementById(pieceId).style.left);
-    // console.log("Top value before: ", document.getElementById(pieceId).style.top);
-    
     let leftValue = getLeftValue(e);
     let topValue = getTopValue(e);
-
-    // console.log(leftValue);
-    // console.log(topValue);
 
     if(isValidMove(pieceId, leftValue, topValue)) {
         console.log("valid move");
@@ -88,13 +78,6 @@ function dropHandler(e) {
     }
     else
         console.log("invalid move");
-
-    // document.getElementById(pieceId).style.left = leftValue + "px";
-    // document.getElementById(pieceId).style.top = topValue + "px";
-
-    // console.log("Left value after: ", document.getElementById(pieceId).style.left);
-    // console.log("Top value after: ", document.getElementById(pieceId).style.top);
-
 }
 
 function test() {
@@ -133,13 +116,17 @@ function isValidMove(pieceId, leftValue, topValue) {
     const oldTop = parseInt(piece.style.top);
     // validate move for pawn
     if(pieceId.match("pawn")) {
-        if(topValue > oldTop || Math.abs(topValue - oldTop) > SQUARE_SIZE) {
-            console.log("reason 1");
-            return false;
-        }
         if(leftValue !== oldLeft) {
             console.log(leftValue, " ", parseInt(piece.style.left));
             console.log("reason 2");
+            return false;
+        }
+
+        if(topValue === SQUARE_SIZE * 5 || topValue === SQUARE_SIZE * 4)
+            return true;
+
+        if(topValue > oldTop || Math.abs(topValue - oldTop) > SQUARE_SIZE) {
+            console.log("reason 1");
             return false;
         }
         return true;
@@ -158,39 +145,9 @@ function isValidMove(pieceId, leftValue, topValue) {
             return false;
 
         // validate rook's path
-        
         if(isBlockedPath(pieceId, leftValue, topValue))
             return false;
-        // const all_pieces = document.getElementsByClassName("piece");
-        // for(let i = 0; i < all_pieces.length; i++) {
-        //     if(pieceId === all_pieces[i].id)
-        //         continue;
-        //     let piece_top = parseInt(all_pieces[i].style.top);
-        //     let piece_left = parseInt(all_pieces[i].style.left);
-        //     // if(topValue - oldTop > 0 &&  oldLeft === piece_left && (piece_top > oldTop && piece_top < topValue)) {
-        //     //     console.log("top value, conflict with ", all_pieces[i].id)
-        //     //     return false;
-        //     // }
-        //     // if(topValue - oldTop < 0 && oldLeft === piece_left && (piece_top > topValue && piece_top < oldTop)) {
-        //     //     console.log("top value, conflict with ", all_pieces[i].id)
-        //     //     return false;
-        //     // }
-        //     // if(leftValue - oldLeft > 0 && oldTop === piece_top && (piece_left > oldLeft && piece_left < leftValue)) {
-        //     //     console.log("left value, conflict with ", all_pieces[i].id)
-        //     //     return false;
-        //     // }
-        //     // if(leftValue - oldLeft < 0 && oldTop === piece_top  && (piece_left > leftValue && piece_left < oldLeft)) {
-        //     //     console.log("left value, conflict with ", all_pieces[i].id)
-        //     //     return false;
-        //     // }
-        //     let oldPos_to_piece = euclidDistance(piece_left, oldLeft, piece_top, oldTop);
-        //     let newPos_to_piece = euclidDistance(piece_left, leftValue, piece_top, topValue);
-        //     let oldPos_to_newPos = euclidDistance(leftValue, oldLeft, topValue, oldTop);
-        //     if(oldPos_to_piece + newPos_to_piece === oldPos_to_newPos) {
-        //         console.log("Blocked by: ", all_pieces[i].id);
-        //         return false;
-        //     }
-        // }
+        
         return true;
     }
     // validate move for bishop
@@ -200,22 +157,6 @@ function isValidMove(pieceId, leftValue, topValue) {
         }
 
         // validate bishop's path
-
-        // const all_pieces = document.getElementsByClassName("piece");
-        // for(let i = 0; i < all_pieces.length; i++) {
-        //     if(all_pieces[i].id === pieceId) {
-        //         continue;
-        //     } 
-        //     const piece_left = parseInt(all_pieces[i].style.left);
-        //     const piece_top = parseInt(all_pieces[i].style.top);
-        //     if(Math.abs(piece_left - leftValue) === Math.abs(piece_top - topValue)
-        //         && Math.abs(piece_left - oldLeft) === Math.abs(piece_top - oldTop)) {
-        //         console.log("Bishop's blocked by ", all_pieces[i].id);
-        //         return false;
-        //     }
-        //     return true;
-        // }
-
         if(isBlockedPath(pieceId, leftValue, topValue)) {
             return false;
         }
